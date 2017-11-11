@@ -15,6 +15,7 @@ public class Asesor {
     private String apellidoP;
     private String apellidoM;
     private String correo;
+    private String pass;
 
     /**
      *
@@ -24,11 +25,20 @@ public class Asesor {
      * @param correo
      */
     public Asesor(String nombre, String apellidoP, String apellidoM,
-            String correo) {
+            String correo, String pass) {
         this.nombre = nombre;
         this.apellidoP = apellidoP;
         this.apellidoM = apellidoM;
         this.correo = correo;
+        this.pass = pass;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
     public Asesor() {
