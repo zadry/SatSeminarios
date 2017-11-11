@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="mainPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GraphicLayer.FXMLLoginController">
+<AnchorPane id="AnchorPane" fx:id="mainPane" prefHeight="800.0" prefWidth="700.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="satseminarios.FXMLLoginController">
     <stylesheets>
         <URL value="@fxmllogin.css" />
     </stylesheets>
@@ -24,24 +24,21 @@
             </Label>
          </children>
       </Pane>
-      <StackPane layoutX="163.0" layoutY="75.0" prefHeight="196.0" prefWidth="245.0">
+      <StackPane layoutX="249.0" layoutY="154.0" prefHeight="196.0" prefWidth="245.0" />
+      <VBox layoutX="188.0" layoutY="256.0" prefHeight="217.0" prefWidth="245.0">
          <children>
-            <VBox prefHeight="217.0" prefWidth="245.0">
+            <Label fx:id="lbUser" text="Usuario (Correo Electronico)" />
+            <TextField fx:id="tfUsuario" />
+            <Label fx:id="lbPass" text="Contraseña" />
+            <TextField fx:id="pass" />
+            <Label fx:id="lbInfo" />
+            <Pane prefHeight="68.0" prefWidth="245.0">
                <children>
-                  <Label fx:id="lbUser" text="Usuario (Correo Electronico)" />
-                  <TextField fx:id="tfUsuario" />
-                  <Label fx:id="lbPass" text="Contraseña" />
-                  <TextField fx:id="pass" />
-                  <Label fx:id="lbInfo" />
-                  <Pane prefHeight="68.0" prefWidth="245.0">
-                     <children>
-                        <Button fx:id="submit" layoutX="32.0" layoutY="18.0" mnemonicParsing="false" onAction="#handlerSubmit" text="Submit" />
-                        <Button fx:id="registrarse" layoutX="120.0" layoutY="18.0" mnemonicParsing="false" onAction="#handlerRegistrarse" text="Registrarse" />
-                     </children>
-                  </Pane>
+                  <Button fx:id="submit" layoutX="32.0" layoutY="18.0" mnemonicParsing="false" onAction="#handlerSubmit" text="Submit" />
+                  <Button fx:id="registrarse" layoutX="120.0" layoutY="18.0" mnemonicParsing="false" onAction="#handlerRegistrarse" text="Registrarse" />
                </children>
-            </VBox>
+            </Pane>
          </children>
-      </StackPane>
+      </VBox>
    </children>
 </AnchorPane>
