@@ -14,15 +14,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javax.imageio.ImageIO;
@@ -53,13 +56,17 @@ public class RegistrarCandidatosController implements Initializable {
     @FXML
     private TextField tfDirectorTesis;
     @FXML
-    private ChoiceBox<?> cbCarrera;
+    private ChoiceBox<String> cbCarrera;
     @FXML
     private Button btAnexarCartaCompromiso;
     @FXML
     private Button btAnexarCartaMotivos;
     @FXML
     private ImageView ivFoto;
+    @FXML
+    private ChoiceBox<String> cbHoraInicial;
+    @FXML
+    private ChoiceBox<String> chHoraFinal;
 
     /**
      * Initializes the controller class.
@@ -67,6 +74,27 @@ public class RegistrarCandidatosController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        //cbCarrera = new ChoiceBox();
+        System.out.println("se ejecuta al inicio");
+        /* cbCarrera = new ChoiceBox<String>(FXCollections.observableArrayList(
+                "Ing. de Software", "Ing. en Sistemas de Transporte Urbano",
+                "Ing. en Sistemas Electrónicos Industriales",
+                "Ing. de Software",
+                "Ing. de Software", "Ing. en Sistemas Energéticos",
+                "Modelación Matemática"));*/
+        // ChoiceBox cbCarrera = new ChoiceBox<String>();
+        cbCarrera.setItems(FXCollections.observableArrayList(
+                "Ing. de Software", "Ing. en Sistemas de Transporte Urbano",
+                "Ing. en Sistemas Electrónicos Industriales",
+                "Ing. de Software",
+                "Ing. de Software", "Ing. en Sistemas Energéticos",
+                "Modelación Matemática"));
+        cbHoraInicial.setItems(FXCollections.observableArrayList(
+                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14",
+                "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"));
+        chHoraFinal.setItems(FXCollections.observableArrayList(
+                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14",
+                "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"));
     }
 
     @FXML
@@ -106,38 +134,18 @@ public class RegistrarCandidatosController implements Initializable {
 
         if (selectedFile != null) {
 
-            InputStream inputStream = null;
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            try {
-                System.out.println(selectedFile.toURI().toString());
-                File file = new File(selectedFile.toURI().toString());
-                inputStream = new FileInputStream(file);
+            //Dividiendo la direccion para cortarle la cabeza
+            System.out.println(selectedFile.toURI().toString());
+            String string = selectedFile.toURI().toString();
 
-                byte[] buffer = new byte[1024];
-                baos = new ByteArrayOutputStream();
+            String[] parts = string.split(":");
+            System.out.println("parte 0 " + parts[1] + " part 2 = " + parts[2]);
+            File file = new File("C:" + parts[2]);
+            FileInputStream fin = new FileInputStream(file);
+            byte fileContent[] = new byte[(int) file.length()];
+            fin.read(fileContent);
+            //File contente tiene el archivo a guardar en la base de datos
 
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    baos.write(buffer, 0, bytesRead);
-                }
-                System.out.println(bytesRead);
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (inputStream != null) {
-                    try {
-                        inputStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            // String photo = selectedFile.toURI().toString();
-            //System.out.println(selectedFile.toURI());
-            //actionStatus.setText("File selected: " + selectedFile.getName());
         } else {
             //actionStatus.setText("File selection cancelled.");
 
@@ -145,7 +153,29 @@ public class RegistrarCandidatosController implements Initializable {
     }
 
     @FXML
-    private void handlerAnexarCartaMotivos(ActionEvent event) {
+    private void handlerAnexarCartaMotivos(ActionEvent event) throws FileNotFoundException, IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(new ExtensionFilter("PDF Files", "*.pdf"));
+        File selectedFile = fileChooser.showOpenDialog(null);
+
+        if (selectedFile != null) {
+
+            //Dividiendo la direccion para cortarle la cabeza
+            System.out.println(selectedFile.toURI().toString());
+            String string = selectedFile.toURI().toString();
+
+            String[] parts = string.split(":");
+            System.out.println("parte 0 " + parts[1] + " part 2 = " + parts[2]);
+            File file = new File("C:" + parts[2]);
+            FileInputStream fin = new FileInputStream(file);
+            byte fileContent[] = new byte[(int) file.length()];
+            fin.read(fileContent);
+        }
+    }
+
+    @FXML
+    private void handlerCBCarrera(MouseEvent event) {
+
     }
 
 }
