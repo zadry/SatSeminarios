@@ -1,23 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
-<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.102" fx:controller="GraphicLayer.FXMLLoginController">
+<AnchorPane id="AnchorPane" fx:id="mainPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GraphicLayer.FXMLLoginController">
     <stylesheets>
         <URL value="@fxmllogin.css" />
     </stylesheets>
    <children>
-      <TitledPane animated="false" prefHeight="400.0" prefWidth="600.0" text="Seminarios UACM">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+      <Pane layoutX="-2.0" prefHeight="45.0" prefWidth="600.0">
+         <children>
+            <Label contentDisplay="CENTER" layoutX="231.0" layoutY="13.0" prefHeight="20.0" prefWidth="138.0" text="Seminarios UACM" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <StackPane layoutX="163.0" layoutY="75.0" prefHeight="196.0" prefWidth="245.0">
+         <children>
+            <VBox prefHeight="217.0" prefWidth="245.0">
                <children>
-                  <StackPane prefHeight="76.0" prefWidth="600.0" />
+                  <Label fx:id="lbUser" text="Usuario (Correo Electronico)" />
+                  <TextField fx:id="tfUsuario" />
+                  <Label fx:id="lbPass" text="Contraseña" />
+                  <TextField fx:id="pass" />
+                  <Label fx:id="lbInfo" />
+                  <Pane prefHeight="68.0" prefWidth="245.0">
+                     <children>
+                        <Button fx:id="submit" layoutX="32.0" layoutY="18.0" mnemonicParsing="false" onAction="#handlerSubmit" text="Submit" />
+                        <Button fx:id="registrarse" layoutX="120.0" layoutY="18.0" mnemonicParsing="false" onAction="#handlerRegistrarse" text="Registrarse" />
+                     </children>
+                  </Pane>
                </children>
-            </AnchorPane>
-        </content>
-      </TitledPane>
+            </VBox>
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>
