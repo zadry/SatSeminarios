@@ -48,6 +48,36 @@ public class HelperLogin {
         return flag;
     }
 
+    public String getMatriculaAsesor(String pass, String correo) {
+        ArrayList<String> id = new ArrayList<>();
+        String flag = null;
+        try {
+            Statement sentencia = conexion.getStatement();
+
+            if (sentencia == null) {
+                return flag;
+            }
+
+            String query = "SELECT IDASESOR FROM ASESOR WHERE PASS = '" + pass + "'"
+                    + " AND CORREO = '" + correo + "'";
+            ResultSet resultado = sentencia.executeQuery(query);
+            System.out.println(query);
+            // System.out.println(resultado.getString("PASS"));
+            while (resultado.next()) {
+                //flag = 0;
+                id.add(resultado.getString("IDASESOR"));
+                flag = id.get(0);
+                // System.out.println("en helper while " + resultado.getString("PASS"));
+            }
+
+        } catch (SQLException ex) {
+
+            System.out.println("Exeption:" + ex.getMessage());
+            return null;
+        }
+        return flag;
+    }
+
     public boolean getCorreo(String correo) {
 
         boolean flag = false;
@@ -60,6 +90,32 @@ public class HelperLogin {
             }
 
             String query = "SELECT CORREO FROM CANDIDATOS WHERE CORREO='" + correo + "'";
+
+            ResultSet resultado = sentencia.executeQuery(query);
+
+            while (resultado.next()) {
+                flag = true;
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Exception :" + ex.getMessage());
+            return false;
+        }
+        return flag;
+    }
+
+    public boolean getCorreoAsesor(String correo) {
+
+        boolean flag = false;
+        //String consulta = null;
+        try {
+            Statement sentencia = conexion.getStatement();
+
+            if (sentencia == null) {
+                return false;
+            }
+
+            String query = "SELECT CORREO FROM ASESOR WHERE CORREO='" + correo + "'";
 
             ResultSet resultado = sentencia.executeQuery(query);
 

@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -25,7 +26,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -50,6 +54,8 @@ public class FXMLLoginController implements Initializable {
     private Button registrarse;
     @FXML
     private TextField tfPass;
+    private static String userType;
+    private String id;
 
     /**
      * Initializes the controller class.
@@ -63,13 +69,21 @@ public class FXMLLoginController implements Initializable {
         tfUsuario.focusedProperty().addListener((ov, oldV, newV) -> {
             if (!newV) { // focus lost
                 // Your code
-
+                //buscando en la tabla cadidato y en Asesor
                 HelperLogin mHelperLogin = new HelperLogin();
                 if (mHelperLogin.getCorreo(tfUsuario.getText())) {
                     lbUser.setTextFill(Color.web("black"));
-
+                    userType = "CANDIDATO";
                 } else {
-                    lbUser.setTextFill(Color.web("Red"));
+
+                    if (mHelperLogin.getCorreoAsesor(tfUsuario.getText())) {
+                        System.out.println("busco correo en asesor");
+                        lbUser.setTextFill(Color.web("black"));
+                        userType = "ASESOR";
+                    } else {
+                        lbUser.setTextFill(Color.web("Red"));
+                    }
+
                 }
 
             }
@@ -79,7 +93,33 @@ public class FXMLLoginController implements Initializable {
     }
 
     @FXML
-    private void handlerSubmit(ActionEvent event) {
+    private void handlerSubmit(ActionEvent event) throws IOException {
+        HelperLogin mHelperLogin = new HelperLogin();
+
+        if (mHelperLogin.getMatricula(tfPass.getText(), tfUsuario.getText())) {
+            lbPass.setTextFill(Color.web("black"));
+
+        } else {
+
+            id = mHelperLogin.getMatriculaAsesor(tfPass.getText(), tfUsuario.getText());
+            System.out.println("entro a buscar el pass en Asesor y id = " + id);
+            if (id != null) {
+
+                lbPass.setTextFill(Color.web("black"));
+                submit.setDisable(false);
+                System.out.println("fui yo =" + id);
+                //Creando un panel nuevo
+                //showCustomerDialog(String id)
+                Stage myStage = showCustomerDialog(id);
+                myStage.show();
+                // AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLActionPanelAsesor.fxml"));
+                //mainPane.getChildren().setAll(pane);
+            } else {
+                submit.setDisable(true);
+                lbPass.setTextFill(Color.web("Red"));
+            }
+
+        }
     }
 
     @FXML
@@ -114,15 +154,25 @@ public class FXMLLoginController implements Initializable {
 
     @FXML
     private void handlerTFPass(KeyEvent event) {
-        if (tfPass.getText().length() == 11) {
-            HelperLogin mHelperLogin = new HelperLogin();
-            if (mHelperLogin.getMatricula(tfPass.getText(), tfUsuario.getText())) {
-                lbPass.setTextFill(Color.web("black"));
-                submit.setDisable(false);
-            } else {
-                lbPass.setTextFill(Color.web("Red"));
-            }
+
+        if (tfPass.getText().length() > 0) {
+            submit.setDisable(false);
+
         }
     }
 
+    public Stage showCustomerDialog(String id) throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("FXMLActionPanelAsesor.fxml"));
+
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.setScene(new Scene((Pane) loader.load()));
+
+        FXMLActionPanelAsesorController controller = loader.<FXMLActionPanelAsesorController>getController();
+        controller.initData(id);
+
+        stage.show();
+
+        return stage;
+    }
 }
