@@ -5,8 +5,10 @@
  */
 package satseminarios;
 
+import DataBaseLayer.HelperLogin;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -52,6 +54,23 @@ public class FXMLLoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        //focus lost para el usuario se verificara que el usuario existe en la base de datos
+        tfUsuario.focusedProperty().addListener((ov, oldV, newV) -> {
+            if (!newV) { // focus lost
+                // Your code
+                ArrayList<String> resultado = new ArrayList();
+                HelperLogin mHelperLogin = new HelperLogin();
+                resultado = mHelperLogin.getCorreo(tfUsuario.getText());
+                System.out.println(resultado.toString());
+            }
+        });
+        //focus lost para la contraseña
+        tfUsuario.focusedProperty().addListener((ov, oldV, newV) -> {
+            if (!newV) { // focus lost
+                // Your code
+                // System.out.println("foucuslost");
+            }
+        });
     }
 
     @FXML

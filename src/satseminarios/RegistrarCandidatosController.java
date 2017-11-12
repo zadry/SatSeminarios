@@ -29,6 +29,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javax.imageio.ImageIO;
+import satseminarios.Logic.Candidato;
 
 /**
  * FXML Controller class
@@ -68,6 +69,8 @@ public class RegistrarCandidatosController implements Initializable {
     @FXML
     private ChoiceBox<String> chHoraFinal;
 
+    private Candidato mCandidato;
+
     /**
      * Initializes the controller class.
      */
@@ -92,6 +95,7 @@ public class RegistrarCandidatosController implements Initializable {
         cbHoraInicial.setItems(FXCollections.observableArrayList(
                 "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14",
                 "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"));
+
         chHoraFinal.setItems(FXCollections.observableArrayList(
                 "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14",
                 "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"));
