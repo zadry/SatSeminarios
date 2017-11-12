@@ -16,6 +16,8 @@ import javafx.fxml.Initializable;
  */
 public class FXMLActionPanelCandidatosController implements Initializable {
 
+    private String idCandidato;
+
     /**
      * Initializes the controller class.
      */
@@ -24,4 +26,10 @@ public class FXMLActionPanelCandidatosController implements Initializable {
         // TODO
     }
 
+    //metodo que comunica datos entre los Stages 
+    void initData(String id) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        idCandidato = id;
+
+    }
 }

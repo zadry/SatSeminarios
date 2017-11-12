@@ -71,12 +71,12 @@ public class FXMLLoginController implements Initializable {
                 // Your code
                 //buscando en la tabla cadidato y en Asesor
                 HelperLogin mHelperLogin = new HelperLogin();
-                if (mHelperLogin.getCorreo(tfUsuario.getText())) {
+                if (mHelperLogin.getCorreo(tfUsuario.getText().toUpperCase())) {
                     lbUser.setTextFill(Color.web("black"));
                     userType = "CANDIDATO";
                 } else {
 
-                    if (mHelperLogin.getCorreoAsesor(tfUsuario.getText())) {
+                    if (mHelperLogin.getCorreoAsesor(tfUsuario.getText().toUpperCase())) {
                         System.out.println("busco correo en asesor");
                         lbUser.setTextFill(Color.web("black"));
                         userType = "ASESOR";
@@ -92,16 +92,25 @@ public class FXMLLoginController implements Initializable {
 
     }
 
+    /**
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     private void handlerSubmit(ActionEvent event) throws IOException {
         HelperLogin mHelperLogin = new HelperLogin();
 
-        if (mHelperLogin.getMatricula(tfPass.getText(), tfUsuario.getText())) {
+        if (mHelperLogin.getMatricula(tfPass.getText(), tfUsuario.getText().toUpperCase())) {
+            System.out.println("existe el candidato");
             lbPass.setTextFill(Color.web("black"));
+            Stage myStage = showCandidatosDialog(id);
+            submit.setDisable(true);
+            myStage.show();
 
         } else {
 
-            id = mHelperLogin.getMatriculaAsesor(tfPass.getText(), tfUsuario.getText());
+            id = mHelperLogin.getMatriculaAsesor(tfPass.getText(), tfUsuario.getText().toUpperCase());
             System.out.println("entro a buscar el pass en Asesor y id = " + id);
             if (id != null) {
 
@@ -110,8 +119,9 @@ public class FXMLLoginController implements Initializable {
                 System.out.println("fui yo =" + id);
                 //Creando un panel nuevo
                 //showCustomerDialog(String id)
-                Stage myStage = showCustomerDialog(id);
+                Stage myStage = showAsesorDialog(id);
                 myStage.show();
+                submit.setDisable(true);
                 // AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLActionPanelAsesor.fxml"));
                 //mainPane.getChildren().setAll(pane);
             } else {
@@ -161,7 +171,7 @@ public class FXMLLoginController implements Initializable {
         }
     }
 
-    public Stage showCustomerDialog(String id) throws IOException {
+    public Stage showAsesorDialog(String id) throws IOException {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("FXMLActionPanelAsesor.fxml"));
 
@@ -169,6 +179,21 @@ public class FXMLLoginController implements Initializable {
         stage.setScene(new Scene((Pane) loader.load()));
 
         FXMLActionPanelAsesorController controller = loader.<FXMLActionPanelAsesorController>getController();
+        controller.initData(id);
+
+        stage.show();
+
+        return stage;
+    }
+
+    public Stage showCandidatosDialog(String id) throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("FXMLActionPanelCandidatos.fxml"));
+
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.setScene(new Scene((Pane) loader.load()));
+
+        FXMLActionPanelCandidatosController controller = loader.<FXMLActionPanelCandidatosController>getController();
         controller.initData(id);
 
         stage.show();
