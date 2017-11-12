@@ -12,7 +12,7 @@ package satseminarios.Logic;
 public class Validacion {
 
     public static boolean validarCadenas(String cadena) {
-        if (cadena.matches("[A-Za-z]{20}")) {
+        if (cadena.matches("[A-Za-z]+{2,25}")) {
             return true;
         } else {
             return false;
@@ -28,7 +28,15 @@ public class Validacion {
     }
 
     public static boolean validarCorreo(String cadena) {
-        if (cadena.matches("[a-zA-Z0-9]+@[a-zA-Z0-9]+.[a-zA-Z]{2,6}")) {
+        if (cadena.matches("[a-zA-Z0-9\\.\\_\\-]{2,30}@[a-zA-Z0-9\\.]{1,50}")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean validarMatricula(String cadena) {
+        if (cadena.matches("[0-9]{2}-[0-9]{3}-[0-9]{4}")) {
             return true;
         } else {
             return false;

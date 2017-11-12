@@ -5,6 +5,7 @@
  */
 package satseminarios;
 
+import DataBaseLayer.HelperLogin;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -20,16 +21,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javax.imageio.ImageIO;
 import satseminarios.Logic.Candidato;
+import satseminarios.Logic.Validacion;
 
 /**
  * FXML Controller class
@@ -70,6 +75,36 @@ public class RegistrarCandidatosController implements Initializable {
     private ChoiceBox<String> chHoraFinal;
 
     private Candidato mCandidato;
+    @FXML
+    private Label lbNombre;
+    @FXML
+    private Label lbApellidP;
+    @FXML
+    private Label lbApellidoM;
+    @FXML
+    private Label lbMatricula;
+    @FXML
+    private Label lbCorreo;
+    @FXML
+    private Label lbTelefono;
+    @FXML
+    private Label lbTemaTesis;
+    @FXML
+    private Label lbDirectorTesis;
+    @FXML
+    private Label lbCarrera;
+    @FXML
+    private CheckBox cbTrabaja;
+    @FXML
+    private Label lbHorarioLaboral;
+    @FXML
+    private Label lbLugarTrabajo;
+    @FXML
+    private Label lbCartaCompromiso;
+    @FXML
+    private Label lbCartaMotivos;
+    @FXML
+    private Button btSubmit;
 
     /**
      * Initializes the controller class.
@@ -78,6 +113,9 @@ public class RegistrarCandidatosController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         //cbCarrera = new ChoiceBox();
+        btSubmit.setDisable(true);
+
+        mCandidato = new Candidato();
         System.out.println("se ejecuta al inicio");
         /* cbCarrera = new ChoiceBox<String>(FXCollections.observableArrayList(
                 "Ing. de Software", "Ing. en Sistemas de Transporte Urbano",
@@ -99,6 +137,97 @@ public class RegistrarCandidatosController implements Initializable {
         chHoraFinal.setItems(FXCollections.observableArrayList(
                 "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14",
                 "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"));
+        //metodos para onfofusleft de cada campo
+        tfNombre.focusedProperty().addListener((ov, oldV, newV) -> {
+            if (!newV) { // focus lost
+
+                if (Validacion.validarCadenas(tfNombre.getText())) {
+                    lbNombre.setTextFill(Color.web("black"));
+                    mCandidato.setNombre(tfNombre.getText().toUpperCase());
+                    if (ValidarCampos()) {
+                        btSubmit.setDisable(false);
+                    }
+
+                } else {
+                    lbNombre.setTextFill(Color.web("red"));
+
+                }
+            }
+        });
+        tfApellidoP.focusedProperty().addListener((ov, oldV, newV) -> {
+            if (!newV) { // focus lost
+
+                if (Validacion.validarCadenas(tfApellidoP.getText())) {
+                    lbApellidP.setTextFill(Color.web("black"));
+                    mCandidato.setApellidoP(tfApellidoP.getText().toUpperCase());
+                    if (ValidarCampos()) {
+                        btSubmit.setDisable(false);
+                    }
+                } else {
+                    lbNombre.setTextFill(Color.web("red"));
+
+                }
+            }
+        });
+        tfApellidoM.focusedProperty().addListener((ov, oldV, newV) -> {
+            if (!newV) { // focus lost
+
+                if (Validacion.validarCadenas(tfApellidoM.getText())) {
+                    lbApellidoM.setTextFill(Color.web("black"));
+                    mCandidato.setApellidoM(tfApellidoM.getText().toUpperCase());
+                    if (ValidarCampos()) {
+                        btSubmit.setDisable(false);
+                    }
+                } else {
+                    lbApellidoM.setTextFill(Color.web("red"));
+
+                }
+            }
+        });
+
+        tfMatricula.focusedProperty().addListener((ov, oldV, newV) -> {
+            if (!newV) { // focus lost
+
+                if (Validacion.validarMatricula(tfMatricula.getText())) {
+                    lbMatricula.setTextFill(Color.web("black"));
+                    mCandidato.setMatricula(tfMatricula.getText().toUpperCase());
+                    if (ValidarCampos()) {
+                        btSubmit.setDisable(false);
+                    }
+                } else {
+                    lbMatricula.setTextFill(Color.web("red"));
+
+                }
+            }
+        });
+        Correo.focusedProperty().addListener((ov, oldV, newV) -> {
+            if (!newV) { // focus lost
+
+                if (Validacion.validarCorreo(Correo.getText())) {
+                    lbCorreo.setTextFill(Color.web("black"));
+                    mCandidato.setCorreo(Correo.getText().toUpperCase());
+                    if (ValidarCampos()) {
+                        btSubmit.setDisable(false);
+                    }
+                } else {
+                    lbCorreo.setTextFill(Color.web("red"));
+
+                }
+            }
+        });
+        Telefono.focusedProperty().addListener((ov, oldV, newV) -> {
+            if (!newV) { // focus lost
+
+                if (Validacion.validarTelefono(Telefono.getText())) {
+                    lbTelefono.setTextFill(Color.web("black"));
+                    mCandidato.setTelefono(Telefono.getText().toUpperCase());
+
+                } else {
+                    lbTelefono.setTextFill(Color.web("red"));
+                }
+            }
+        });
+
     }
 
     @FXML
@@ -118,6 +247,7 @@ public class RegistrarCandidatosController implements Initializable {
             //ress es la variable a guardar en la base de datos como binario
             byte[] res = s.toByteArray();
             s.close();
+            // mCandidato.setFotografia(res);
             System.out.println(res.length);
 
             // String photo = selectedFile.toURI().toString();
@@ -180,6 +310,24 @@ public class RegistrarCandidatosController implements Initializable {
     @FXML
     private void handlerCBCarrera(MouseEvent event) {
 
+    }
+
+    @FXML
+    private void handlerSubmit(ActionEvent event) {
+
+    }
+
+    private boolean ValidarCampos() {
+        if (Validacion.validarCadenas(tfNombre.getText())
+                && Validacion.validarCadenas(tfApellidoP.getText())
+                && Validacion.validarCadenas(tfApellidoM.getText())
+                && Validacion.validarMatricula(tfMatricula.getText())
+                && Validacion.validarCorreo(Correo.getText())) {
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
