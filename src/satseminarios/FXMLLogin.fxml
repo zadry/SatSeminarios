@@ -30,7 +30,7 @@
             <Label fx:id="lbUser" text="Usuario (Correo Electronico)" />
             <TextField fx:id="tfUsuario" />
             <Label fx:id="lbPass" text="Contraseña" />
-            <TextField fx:id="pass" />
+            <TextField fx:id="tfPass" onKeyPressed="#handlerTFPass" />
             <Label fx:id="lbInfo" />
             <Pane prefHeight="68.0" prefWidth="245.0">
                <children>

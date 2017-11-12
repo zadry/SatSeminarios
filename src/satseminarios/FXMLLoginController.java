@@ -22,7 +22,10 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 
 /**
  * FXML Controller class
@@ -40,13 +43,13 @@ public class FXMLLoginController implements Initializable {
     @FXML
     private Label lbPass;
     @FXML
-    private TextField pass;
-    @FXML
     private Label lbInfo;
     @FXML
     private Button submit;
     @FXML
     private Button registrarse;
+    @FXML
+    private TextField tfPass;
 
     /**
      * Initializes the controller class.
@@ -55,22 +58,24 @@ public class FXMLLoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         //focus lost para el usuario se verificara que el usuario existe en la base de datos
+        submit.setDisable(true);
+        lbUser.setTextFill(Color.web("Black"));
         tfUsuario.focusedProperty().addListener((ov, oldV, newV) -> {
             if (!newV) { // focus lost
                 // Your code
-                ArrayList<String> resultado = new ArrayList();
+
                 HelperLogin mHelperLogin = new HelperLogin();
-                resultado = mHelperLogin.getCorreo(tfUsuario.getText());
-                System.out.println(resultado.toString());
+                if (mHelperLogin.getCorreo(tfUsuario.getText())) {
+                    lbUser.setTextFill(Color.web("black"));
+
+                } else {
+                    lbUser.setTextFill(Color.web("Red"));
+                }
+
             }
         });
         //focus lost para la contraseña
-        tfUsuario.focusedProperty().addListener((ov, oldV, newV) -> {
-            if (!newV) { // focus lost
-                // Your code
-                // System.out.println("foucuslost");
-            }
-        });
+
     }
 
     @FXML
@@ -105,6 +110,19 @@ public class FXMLLoginController implements Initializable {
             // ... user chose CANCEL or closed the dialog
         }
 
+    }
+
+    @FXML
+    private void handlerTFPass(KeyEvent event) {
+        if (tfPass.getText().length() == 11) {
+            HelperLogin mHelperLogin = new HelperLogin();
+            if (mHelperLogin.getMatricula(tfPass.getText(), tfUsuario.getText())) {
+                lbPass.setTextFill(Color.web("black"));
+                submit.setDisable(false);
+            } else {
+                lbPass.setTextFill(Color.web("Red"));
+            }
+        }
     }
 
 }

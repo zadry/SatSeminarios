@@ -24,55 +24,54 @@ public class HelperLogin {
      *
      * @return
      */
-    public String getMatricula(String matricula) {
+    public boolean getMatricula(String matricula, String correo) {
         //ArrayList<String> sucursales = new ArrayList<>();
-        String consulta = null;
+        boolean flag = false;
         try {
             Statement sentencia = conexion.getStatement();
 
             if (sentencia == null) {
-                return consulta;
+                return false;
             }
 
-            String query = "SELECT MATRICULA FROM CANDIDATOS WHERE MATRICULA=" + matricula + ";";
+            String query = "SELECT MATRICULA FROM CANDIDATOS WHERE MATRICULA='" + matricula + "'"
+                    + "AND CORREO = '" + correo + "'";
             ResultSet resultado = sentencia.executeQuery(query);
 
             while (resultado.next()) {
-                consulta = resultado.getString("MATRICULA");
+                flag = true;
             }
 
         } catch (SQLException ex) {
-            return consulta;
+            return false;
         }
-        return consulta;
+        return flag;
     }
 
-    public ArrayList<String> getCorreo(String correo) {
-        ArrayList<String> consulta = new ArrayList<>();
+    public boolean getCorreo(String correo) {
+
+        boolean flag = false;
         //String consulta = null;
         try {
             Statement sentencia = conexion.getStatement();
 
             if (sentencia == null) {
-                System.out.println("cnsulta = null");
-                return consulta;
+                return false;
             }
-            System.out.println(" se va a ejecutar la sentencia");
-            String query = "SELECT CORREO FROM CANDIDATOS WHERE CORREO='" + correo + "';";
-            System.out.println("query = " + query);
+
+            String query = "SELECT CORREO FROM CANDIDATOS WHERE CORREO='" + correo + "'";
+
             ResultSet resultado = sentencia.executeQuery(query);
-            //consulta.add(resultado.getString("CORREO"));
-            System.out.println("resultado= " + resultado.toString());
+
             while (resultado.next()) {
-                consulta.add(resultado.getString("CORREO"));
-                System.out.println(resultado.getString("CORREO"));
+                flag = true;
             }
 
         } catch (SQLException ex) {
             System.out.println("Exception :" + ex.getMessage());
-            return consulta;
+            return false;
         }
-        return consulta;
+        return flag;
     }
 
     public ArrayList<String> getOtraCosa(String matricula) {
