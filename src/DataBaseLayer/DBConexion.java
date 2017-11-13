@@ -66,40 +66,4 @@ public class DBConexion {
         }
     }
 
-//    public ArrayList RegresaUnaColumna(String atributo,String tabla){
-//        ArrayList columna = new ArrayList();
-//        try{
-//            Statement sentencia = DBConexion.conexion.createStatement();
-//
-//            ResultSet resultado = sentencia.executeQuery("SELECT " + atributo + " FROM " + tabla);
-//
-//            while (resultado.next())
-//                columna.add(resultado.getString(atributo));
-//        }
-//        catch(SQLException e){
-//            System.err.println(e);
-//        }
-//        finally{
-//            return columna;
-//        }
-//    }
-//
-//    public ArrayList RegresaValoresPorCadena(String atributo, String tabla, String atributo2, String cadena){
-//        ArrayList valor = new ArrayList();
-//        try{
-//            Statement sentencia = DBConexion.conexion.createStatement();
-//
-//            ResultSet resultado = sentencia.executeQuery("SELECT " + atributo + " FROM " + tabla + " WHERE " + atributo2 + " = " + "'" + cadena + "'");
-//
-//
-//            while (resultado.next())
-//                valor.add(resultado.getString(atributo));
-//        }
-//        catch(SQLException e){
-//            System.err.println(e);
-//        }
-//        finally{
-//            return valor;
-//        }
-//    }
 }

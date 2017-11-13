@@ -5,13 +5,15 @@
  */
 package satseminarios.Logic;
 
+import java.sql.Blob;
+
 /**
  *
  * @author javv
  */
 public class Candidato {
 
-    private byte fotografia;
+    private Blob fotografia;
     private String nombre;
     private String apellidoP;
     private String apellidoM;
@@ -22,11 +24,11 @@ public class Candidato {
     private String temaTesis;
     private String directorTesis;
     private String carrera;
-    private boolean trabaja;
+    private int trabaja;
     private String horario;
     private String lugarDeTrabajo;
-    private byte cartaMotivos;
-    private byte cartaCompromiso;
+    private Blob cartaMotivos;
+    private Blob cartaCompromiso;
 
     /**
      *
@@ -49,10 +51,10 @@ public class Candidato {
      * @param carrera
      * @param trabaja
      */
-    public Candidato(byte fotografia, String nombre, String apellidoP,
+    public Candidato(Blob fotografia, String nombre, String apellidoP,
             String apellidoM, String matricula, String correo, String telefono,
             String generacion, String temaTesis, String directorTesis,
-            String carrera, boolean trabaja) {
+            String carrera, int trabaja) {
         this.fotografia = fotografia;
         this.nombre = nombre;
         this.apellidoP = apellidoP;
@@ -86,11 +88,11 @@ public class Candidato {
      * @param cartaMotivos
      * @param cartaCompromiso
      */
-    public Candidato(byte fotografia, String nombre, String apellidoP,
+    public Candidato(Blob fotografia, String nombre, String apellidoP,
             String apellidoM, String matricula, String correo, String telefono,
             String generacion, String temaTesis, String directorTesis,
-            String carrera, boolean trabaja, String horario,
-            String lugarDeTrabajo, byte cartaMotivos, byte cartaCompromiso) {
+            String carrera, int trabaja, String horario,
+            String lugarDeTrabajo, Blob cartaMotivos, Blob cartaCompromiso) {
         this.fotografia = fotografia;
         this.nombre = nombre;
         this.apellidoP = apellidoP;
@@ -113,11 +115,11 @@ public class Candidato {
      *
      * @return
      */
-    public byte getFotografia() {
+    public Blob getFotografia() {
         return fotografia;
     }
 
-    public void setFotografia(byte fotografia) {
+    public void setFotografia(Blob fotografia) {
         this.fotografia = fotografia;
     }
 
@@ -201,11 +203,11 @@ public class Candidato {
         this.carrera = carrera;
     }
 
-    public boolean isTrabaja() {
+    public int getTrabaja() {
         return trabaja;
     }
 
-    public void setTrabaja(boolean trabaja) {
+    public void setTrabaja(int trabaja) {
         this.trabaja = trabaja;
     }
 
@@ -225,19 +227,19 @@ public class Candidato {
         this.lugarDeTrabajo = lugarDeTrabajo;
     }
 
-    public byte getCartaMotivos() {
+    public Blob getCartaMotivos() {
         return cartaMotivos;
     }
 
-    public void setCartaMotivos(byte cartaMotivos) {
+    public void setCartaMotivos(Blob cartaMotivos) {
         this.cartaMotivos = cartaMotivos;
     }
 
-    public byte getCartaCompromiso() {
+    public Blob getCartaCompromiso() {
         return cartaCompromiso;
     }
 
-    public void setCartaCompromiso(byte cartaCompromiso) {
+    public void setCartaCompromiso(Blob cartaCompromiso) {
         this.cartaCompromiso = cartaCompromiso;
     }
 

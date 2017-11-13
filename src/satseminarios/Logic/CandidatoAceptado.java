@@ -5,6 +5,8 @@
  */
 package satseminarios.Logic;
 
+import java.sql.Blob;
+
 /**
  *
  * @author javv
@@ -31,10 +33,10 @@ public class CandidatoAceptado extends Candidato {
      * @param carrera
      * @param trabaja
      */
-    public CandidatoAceptado(byte fotografia, String nombre, String apellidoP,
+    public CandidatoAceptado(Blob fotografia, String nombre, String apellidoP,
             String apellidoM, String matricula, String correo, String telefono,
             String generacion, String temaTesis, String directorTesis,
-            String carrera, boolean trabaja, Asesor asesor) {
+            String carrera, int trabaja, Asesor asesor) {
         super(fotografia, nombre, apellidoP, apellidoM, matricula, correo,
                 telefono, generacion, temaTesis, directorTesis, carrera,
                 trabaja);
@@ -60,11 +62,11 @@ public class CandidatoAceptado extends Candidato {
      * @param cartaMotivos
      * @param cartaCompromiso
      */
-    public CandidatoAceptado(byte fotografia, String nombre, String apellidoP,
+    public CandidatoAceptado(Blob fotografia, String nombre, String apellidoP,
             String apellidoM, String matricula, String correo, String telefono,
             String generacion, String temaTesis, String directorTesis,
-            String carrera, boolean trabaja, String horario,
-            String lugarDeTrabajo, byte cartaMotivos, byte cartaCompromiso,
+            String carrera, int trabaja, String horario,
+            String lugarDeTrabajo, Blob cartaMotivos, Blob cartaCompromiso,
             Asesor asesor) {
         super(fotografia, nombre, apellidoP, apellidoM, matricula, correo,
                 telefono, generacion, temaTesis, directorTesis, carrera,

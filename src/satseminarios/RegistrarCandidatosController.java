@@ -5,6 +5,7 @@
  */
 package satseminarios;
 
+import DataBaseLayer.HelperCandidatos;
 import DataBaseLayer.HelperLogin;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -14,6 +15,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.embed.swing.SwingFXUtils;
@@ -105,6 +108,8 @@ public class RegistrarCandidatosController implements Initializable {
     private Label lbCartaMotivos;
     @FXML
     private Button btSubmit;
+    @FXML
+    private TextField tfLugarTrabajo;
 
     /**
      * Initializes the controller class.
@@ -231,7 +236,7 @@ public class RegistrarCandidatosController implements Initializable {
     }
 
     @FXML
-    private void handlerAnexarFoto(ActionEvent event) throws IOException {
+    private void handlerAnexarFoto(ActionEvent event) throws IOException, SQLException {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Image Files", "*.jpg", "*.png", "*.bitmap", "*.gif"));
@@ -247,21 +252,18 @@ public class RegistrarCandidatosController implements Initializable {
             //ress es la variable a guardar en la base de datos como binario
             byte[] res = s.toByteArray();
             s.close();
-            // mCandidato.setFotografia(res);
+            Blob blob = new javax.sql.rowset.serial.SerialBlob(res);
+            mCandidato.setFotografia(blob);
             System.out.println(res.length);
-
-            // String photo = selectedFile.toURI().toString();
-            //System.out.println(selectedFile.toURI());
-            //actionStatus.setText("File selected: " + selectedFile.getName());
         } else {
             //actionStatus.setText("File selection cancelled.");
-
+            mCandidato.setFotografia(null);
         }
 
     }
 
     @FXML
-    private void handlerBtCartaCompromiso(ActionEvent event) throws IOException {
+    private void handlerBtCartaCompromiso(ActionEvent event) throws IOException, SQLException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(new ExtensionFilter("PDF Files", "*.pdf"));
         File selectedFile = fileChooser.showOpenDialog(null);
@@ -278,16 +280,18 @@ public class RegistrarCandidatosController implements Initializable {
             FileInputStream fin = new FileInputStream(file);
             byte fileContent[] = new byte[(int) file.length()];
             fin.read(fileContent);
+            Blob blob = new javax.sql.rowset.serial.SerialBlob(fileContent);
+            mCandidato.setCartaCompromiso(blob);
             //File contente tiene el archivo a guardar en la base de datos
 
         } else {
             //actionStatus.setText("File selection cancelled.");
-
+            mCandidato.setCartaCompromiso(null);
         }
     }
 
     @FXML
-    private void handlerAnexarCartaMotivos(ActionEvent event) throws FileNotFoundException, IOException {
+    private void handlerAnexarCartaMotivos(ActionEvent event) throws FileNotFoundException, IOException, SQLException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(new ExtensionFilter("PDF Files", "*.pdf"));
         File selectedFile = fileChooser.showOpenDialog(null);
@@ -304,17 +308,55 @@ public class RegistrarCandidatosController implements Initializable {
             FileInputStream fin = new FileInputStream(file);
             byte fileContent[] = new byte[(int) file.length()];
             fin.read(fileContent);
+            Blob blob = new javax.sql.rowset.serial.SerialBlob(fileContent);
+            mCandidato.setCartaCompromiso(blob);
+        } else {
+            mCandidato.setCartaCompromiso(null);
         }
     }
 
     @FXML
     private void handlerCBCarrera(MouseEvent event) {
+        System.out.println("CARRERA: " + cbCarrera.getValue());
 
+        mCandidato.setCarrera(cbCarrera.getValue());
     }
 
     @FXML
     private void handlerSubmit(ActionEvent event) {
+        if (cbCarrera.getValue() == null) {
+            lbCarrera.setTextFill(Color.web("red"));
+        } else {
+            mCandidato.setCarrera(cbCarrera.getValue().toUpperCase());
+            mCandidato.setTemaTesis(tfTemaTesis.getText().toUpperCase());
+            mCandidato.setDirectorTesis(tfDirectorTesis.getText().toUpperCase());
+            if (cbTrabaja.isSelected()) {
+                mCandidato.setTrabaja(1);
+                mCandidato.setHorario(cbHoraInicial.getValue() + " Hrs a " + chHoraFinal.getValue() + " Hrs");
+                mCandidato.setLugarDeTrabajo(tfLugarTrabajo.getText().toUpperCase());
+            } else {
+                mCandidato.setTrabaja(0);
+            }
 
+            System.out.println(
+                    "\n nombre:" + mCandidato.getNombre()
+                    + "\nApellido paterno: " + mCandidato.getApellidoP()
+                    + "\nApellido Materno: " + mCandidato.getApellidoM()
+                    + "\nMatricula: " + mCandidato.getMatricula()
+                    + "\nCorreo:" + mCandidato.getCorreo()
+                    + "\nDirector Tesis: " + mCandidato.getDirectorTesis()
+                    + "\nTema tesis: " + mCandidato.getTemaTesis()
+                    + "\nCarrera: " + mCandidato.getCarrera()
+                    + "\nTrabaja: " + mCandidato.getTrabaja()
+                    + "\nHorario de Trabajo: " + mCandidato.getHorario()
+                    + "\nLugar de trabajo: " + mCandidato.getLugarDeTrabajo());
+            HelperCandidatos mHelperCandidatos = new HelperCandidatos();
+
+            if (mHelperCandidatos.insertCandidato(mCandidato)) {
+
+                System.out.println("Dame una señal de exito");
+            }
+        }
     }
 
     private boolean ValidarCampos() {

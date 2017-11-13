@@ -83,7 +83,7 @@
                            </children>
                         </GridPane>
                         <Label fx:id="lbLugarTrabajo" prefHeight="17.0" prefWidth="101.0" text="Lugar de trabajo" />
-                        <TextField />
+                        <TextField fx:id="tfLugarTrabajo" />
                      </children>
                   </VBox>
                   <Label fx:id="lbCartaCompromiso" text="Carta Compromiso" />
