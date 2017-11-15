@@ -13,7 +13,7 @@ import java.sql.Blob;
  */
 public class Candidato {
 
-    private Blob fotografia;
+    private String fotografia;
     private String nombre;
     private String apellidoP;
     private String apellidoM;
@@ -27,8 +27,9 @@ public class Candidato {
     private int trabaja;
     private String horario;
     private String lugarDeTrabajo;
-    private Blob cartaMotivos;
-    private Blob cartaCompromiso;
+    private String cartaMotivos;
+
+    private String cartaComprimisoS;
 
     /**
      *
@@ -51,7 +52,7 @@ public class Candidato {
      * @param carrera
      * @param trabaja
      */
-    public Candidato(Blob fotografia, String nombre, String apellidoP,
+    public Candidato(String fotografia, String nombre, String apellidoP,
             String apellidoM, String matricula, String correo, String telefono,
             String generacion, String temaTesis, String directorTesis,
             String carrera, int trabaja) {
@@ -67,6 +68,14 @@ public class Candidato {
         this.directorTesis = directorTesis;
         this.carrera = carrera;
         this.trabaja = trabaja;
+    }
+
+    public String getCartaComprimisoS() {
+        return cartaComprimisoS;
+    }
+
+    public void setCartaComprimisoS(String cartaComprimisoS) {
+        this.cartaComprimisoS = cartaComprimisoS;
     }
 
     /**
@@ -88,38 +97,15 @@ public class Candidato {
      * @param cartaMotivos
      * @param cartaCompromiso
      */
-    public Candidato(Blob fotografia, String nombre, String apellidoP,
-            String apellidoM, String matricula, String correo, String telefono,
-            String generacion, String temaTesis, String directorTesis,
-            String carrera, int trabaja, String horario,
-            String lugarDeTrabajo, Blob cartaMotivos, Blob cartaCompromiso) {
-        this.fotografia = fotografia;
-        this.nombre = nombre;
-        this.apellidoP = apellidoP;
-        this.apellidoM = apellidoM;
-        this.matricula = matricula;
-        this.correo = correo;
-        this.telefono = telefono;
-        this.generacion = generacion;
-        this.temaTesis = temaTesis;
-        this.directorTesis = directorTesis;
-        this.carrera = carrera;
-        this.trabaja = trabaja;
-        this.horario = horario;
-        this.lugarDeTrabajo = lugarDeTrabajo;
-        this.cartaMotivos = cartaMotivos;
-        this.cartaCompromiso = cartaCompromiso;
-    }
-
     /**
      *
      * @return
      */
-    public Blob getFotografia() {
+    public String getFotografia() {
         return fotografia;
     }
 
-    public void setFotografia(Blob fotografia) {
+    public void setFotografia(String fotografia) {
         this.fotografia = fotografia;
     }
 
@@ -227,20 +213,12 @@ public class Candidato {
         this.lugarDeTrabajo = lugarDeTrabajo;
     }
 
-    public Blob getCartaMotivos() {
+    public String getCartaMotivos() {
         return cartaMotivos;
     }
 
-    public void setCartaMotivos(Blob cartaMotivos) {
+    public void setCartaMotivos(String cartaMotivos) {
         this.cartaMotivos = cartaMotivos;
-    }
-
-    public Blob getCartaCompromiso() {
-        return cartaCompromiso;
-    }
-
-    public void setCartaCompromiso(Blob cartaCompromiso) {
-        this.cartaCompromiso = cartaCompromiso;
     }
 
 }

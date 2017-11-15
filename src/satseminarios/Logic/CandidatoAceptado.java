@@ -33,7 +33,7 @@ public class CandidatoAceptado extends Candidato {
      * @param carrera
      * @param trabaja
      */
-    public CandidatoAceptado(Blob fotografia, String nombre, String apellidoP,
+    public CandidatoAceptado(String fotografia, String nombre, String apellidoP,
             String apellidoM, String matricula, String correo, String telefono,
             String generacion, String temaTesis, String directorTesis,
             String carrera, int trabaja, Asesor asesor) {
@@ -62,19 +62,6 @@ public class CandidatoAceptado extends Candidato {
      * @param cartaMotivos
      * @param cartaCompromiso
      */
-    public CandidatoAceptado(Blob fotografia, String nombre, String apellidoP,
-            String apellidoM, String matricula, String correo, String telefono,
-            String generacion, String temaTesis, String directorTesis,
-            String carrera, int trabaja, String horario,
-            String lugarDeTrabajo, Blob cartaMotivos, Blob cartaCompromiso,
-            Asesor asesor) {
-        super(fotografia, nombre, apellidoP, apellidoM, matricula, correo,
-                telefono, generacion, temaTesis, directorTesis, carrera,
-                trabaja, horario, lugarDeTrabajo, cartaMotivos,
-                cartaCompromiso);
-        this.asesor = asesor;
-    }
-
     /**
      *
      * @return

@@ -66,4 +66,7 @@ public class DBConexion {
         }
     }
 
+    public final Connection getConexion() {
+        return conexion;
+    }
 }

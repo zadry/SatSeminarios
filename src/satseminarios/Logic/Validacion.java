@@ -42,4 +42,20 @@ public class Validacion {
             return false;
         }
     }
+
+    public static boolean validarCubiculo(String cadena) {
+        if (cadena.matches("[a-zA-Z]{1}-[0-9]{3}")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean validarContraseña(String cadena) {
+        if (cadena.matches("[a-zA-Z0-9\\.\\_\\-]{2,30}")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -15,22 +15,34 @@ public class Asesor {
     private String apellidoP;
     private String apellidoM;
     private String correo;
+    private String cubiculo;
+    private String horarioAsesorias;
     private String pass;
 
-    /**
-     *
-     * @param nombre
-     * @param apellidoP
-     * @param apellidoM
-     * @param correo
-     */
-    public Asesor(String nombre, String apellidoP, String apellidoM,
-            String correo, String pass) {
+    public Asesor(String nombre, String apellidoP, String apellidoM, String correo, String cubiculo, String horarioAsesorias, String pass) {
         this.nombre = nombre;
         this.apellidoP = apellidoP;
         this.apellidoM = apellidoM;
         this.correo = correo;
+        this.cubiculo = cubiculo;
+        this.horarioAsesorias = horarioAsesorias;
         this.pass = pass;
+    }
+
+    public String getCubiculo() {
+        return cubiculo;
+    }
+
+    public void setCubiculo(String cubiculo) {
+        this.cubiculo = cubiculo;
+    }
+
+    public String getHorarioAsesorias() {
+        return horarioAsesorias;
+    }
+
+    public void setHorarioAsesorias(String horarioAsesorias) {
+        this.horarioAsesorias = horarioAsesorias;
     }
 
     public String getPass() {

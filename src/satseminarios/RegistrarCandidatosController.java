@@ -169,7 +169,7 @@ public class RegistrarCandidatosController implements Initializable {
                         btSubmit.setDisable(false);
                     }
                 } else {
-                    lbNombre.setTextFill(Color.web("red"));
+                    lbApellidP.setTextFill(Color.web("red"));
 
                 }
             }
@@ -244,19 +244,15 @@ public class RegistrarCandidatosController implements Initializable {
 
         if (selectedFile != null) {
 
-            Image image = new Image(selectedFile.toURI().toString());
-            ivFoto.setImage(image);
-            BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
-            ByteArrayOutputStream s = new ByteArrayOutputStream();
-            ImageIO.write(bImage, "png", s);
-            //ress es la variable a guardar en la base de datos como binario
-            byte[] res = s.toByteArray();
-            s.close();
-            Blob blob = new javax.sql.rowset.serial.SerialBlob(res);
-            mCandidato.setFotografia(blob);
-            System.out.println(res.length);
+            //Dividiendo la direccion para cortarle la cabeza
+            System.out.println(selectedFile.toURI().toString());
+            String string = selectedFile.toURI().toString();
+
+            String[] parts = string.split(":");
+            mCandidato.setFotografia("C:" + parts[2]);
+
         } else {
-            //actionStatus.setText("File selection cancelled.");
+
             mCandidato.setFotografia(null);
         }
 
@@ -276,17 +272,13 @@ public class RegistrarCandidatosController implements Initializable {
 
             String[] parts = string.split(":");
             System.out.println("parte 0 " + parts[1] + " part 2 = " + parts[2]);
-            File file = new File("C:" + parts[2]);
-            FileInputStream fin = new FileInputStream(file);
-            byte fileContent[] = new byte[(int) file.length()];
-            fin.read(fileContent);
-            Blob blob = new javax.sql.rowset.serial.SerialBlob(fileContent);
-            mCandidato.setCartaCompromiso(blob);
-            //File contente tiene el archivo a guardar en la base de datos
+            System.out.println("C:" + parts[2]);
+
+            mCandidato.setCartaComprimisoS("C:" + parts[2]);
 
         } else {
-            //actionStatus.setText("File selection cancelled.");
-            mCandidato.setCartaCompromiso(null);
+
+            mCandidato.setCartaComprimisoS(null);
         }
     }
 
@@ -299,19 +291,13 @@ public class RegistrarCandidatosController implements Initializable {
         if (selectedFile != null) {
 
             //Dividiendo la direccion para cortarle la cabeza
-            System.out.println(selectedFile.toURI().toString());
             String string = selectedFile.toURI().toString();
 
             String[] parts = string.split(":");
-            System.out.println("parte 0 " + parts[1] + " part 2 = " + parts[2]);
-            File file = new File("C:" + parts[2]);
-            FileInputStream fin = new FileInputStream(file);
-            byte fileContent[] = new byte[(int) file.length()];
-            fin.read(fileContent);
-            Blob blob = new javax.sql.rowset.serial.SerialBlob(fileContent);
-            mCandidato.setCartaCompromiso(blob);
+            mCandidato.setCartaMotivos("C:" + parts[2]);
+            System.out.println("Dir Carta Motivos: " + mCandidato.getCartaMotivos());
         } else {
-            mCandidato.setCartaCompromiso(null);
+            mCandidato.setCartaMotivos(null);
         }
     }
 
@@ -322,8 +308,13 @@ public class RegistrarCandidatosController implements Initializable {
         mCandidato.setCarrera(cbCarrera.getValue());
     }
 
+    /**
+     *
+     * @param event
+     * @throws SQLException
+     */
     @FXML
-    private void handlerSubmit(ActionEvent event) {
+    private void handlerSubmit(final ActionEvent event) throws SQLException {
         if (cbCarrera.getValue() == null) {
             lbCarrera.setTextFill(Color.web("red"));
         } else {
@@ -354,7 +345,37 @@ public class RegistrarCandidatosController implements Initializable {
 
             if (mHelperCandidatos.insertCandidato(mCandidato)) {
 
-                System.out.println("Dame una señal de exito");
+                System.out.println("Insertado con exito");
+                if (mCandidato.getCartaComprimisoS() != null) {
+                    if (mHelperCandidatos.setCartaCompromiso(mCandidato)) {
+                        System.out.println("Carta insertada con exito");
+                    } else {
+                        System.out.println("Carta no inseratda");
+                    }
+
+                } else {
+                    System.out.println("carta compromiso = null");
+                }
+                if (mCandidato.getFotografia() != null) {
+                    if (mHelperCandidatos.setFoto(mCandidato)) {
+                        System.out.println("Foto insertada con exito");
+                    } else {
+                        System.out.println("Foto no inseratda");
+                    }
+
+                } else {
+                    System.out.println("Foto = null");
+                }
+                if (mCandidato.getCartaMotivos() != null) {
+                    if (mHelperCandidatos.setCartaMotivos(mCandidato)) {
+                        System.out.println("Carta motivos insertada con exito");
+                    } else {
+                        System.out.println("Carta motivos no inseratda");
+                    }
+
+                } else {
+                    System.out.println("carta motivos = null");
+                }
             }
         }
     }

@@ -19,7 +19,6 @@ import javafx.scene.control.Label;
 public class FXMLActionPanelAsesorController implements Initializable {
 
     String idAsesor;
-    @FXML
     private Label lbId;
 
     /**
